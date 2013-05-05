@@ -1,0 +1,10 @@
+﻿@{
+    Layout = "_BaseLayout.cshtml";
+    ViewBag.BodyClass = "content";
+}
+
+@section HeaderNavigation {    
+    @Html.Partial("_HeaderNavigation")
+}
+
+@RenderBody()

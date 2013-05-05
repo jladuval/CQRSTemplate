@@ -1,0 +1,7 @@
+*.cs	text diff=patience
+
+*.csproj	
+#merge=union 
+*.sln	merge=union eol=clrf
+*.html	text diff=html
+*.js	text

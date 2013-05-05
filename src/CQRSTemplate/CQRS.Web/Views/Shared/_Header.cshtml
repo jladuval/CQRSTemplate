@@ -1,0 +1,29 @@
+﻿<div class="container">
+    <div class="navbar navbar-top">
+        <div class="navbar-inner">
+            <div class="container">
+
+                <!-- Logo -->
+                <a class="brand" href="#"><span class="visuallyhidden">VisionsLive</span></a>
+                
+                <!-- Account -->
+                <ul class="account">
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li class="welcome">Welcome @User.Identity.Name</li>
+                        <li class="help"><a href="#">Help</a></li>
+                        <li class="logout">
+                            @Html.ActionLink("Logout", "LogOff", "Membership")
+                        </li>       
+                    }
+                    else
+                    {
+                        <li class="login">
+                            @Html.ActionLink("Login", "LogIn", "Membership")
+                        </li>
+                    }
+                </ul>                    
+            </div>
+        </div>
+    </div>
+</div>
