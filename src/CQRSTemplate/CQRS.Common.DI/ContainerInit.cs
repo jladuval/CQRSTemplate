@@ -6,8 +6,11 @@ namespace CQRS.Common.DI
     using System.Web;
     using System.Web.Mvc;
 
+    using Castle.Core;
     using Castle.Facilities.Startable;
     using Castle.Facilities.TypedFactory;
+    using Castle.MicroKernel;
+    using Castle.MicroKernel.Context;
     using Castle.MicroKernel.Registration;
     using Castle.MicroKernel.Resolvers.SpecializedResolvers;
     using Castle.Windsor;

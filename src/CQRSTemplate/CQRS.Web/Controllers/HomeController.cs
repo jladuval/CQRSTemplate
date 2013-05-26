@@ -4,25 +4,20 @@ using CQRS.Security.Interfaces.Queries;
 
 namespace CQRS.Web.Controllers
 {
-    using CQRS.Infrastructure.Logging.Interfaces;
-
     public class HomeController : Controller
     {
-        private readonly ILogger _logger;
+        private readonly ISecurityUserReader SecurityUserReader;
 
-        public HomeController(ILogger logger)
+        private readonly IGate Gate;
+
+        public HomeController(ISecurityUserReader securityUserReader, IGate gate)
         {
-            _logger = logger;
-        }
-
-        public IGate Gate { get; set; }
-
-
-        public ISecurityUserReader SecurityUserReader { get; set; }
+            SecurityUserReader = securityUserReader;
+            Gate = gate;
+        }        
 
         public ActionResult Index()
         {
-            _logger.Trace("Index action of Home controller is called");
             return View();
         }
     }

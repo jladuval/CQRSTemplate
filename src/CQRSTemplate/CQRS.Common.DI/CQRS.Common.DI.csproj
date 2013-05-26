@@ -42,6 +42,7 @@
     <Reference Include="Iesi.Collections">
       <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="NHibernate">
       <HintPath>..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
@@ -77,6 +78,14 @@
     <ProjectReference Include="..\CQRS.Base\CQRS.Base.csproj">
       <Project>{093055ad-d153-497c-8573-0209748060f3}</Project>
       <Name>CQRS.Base %28CQRS.Base\CQRS.Base%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CQRS.Security.Interfaces\CQRS.Security.Interfaces.csproj">
+      <Project>{8ddafb9a-ff87-446e-bc29-08a14a8fe698}</Project>
+      <Name>CQRS.Security.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CQRS.Security\CQRS.Security.csproj">
+      <Project>{819bcb47-8aa8-46eb-8151-823986bed414}</Project>
+      <Name>CQRS.Security %28CQRS.Security\CQRS.Security%29</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

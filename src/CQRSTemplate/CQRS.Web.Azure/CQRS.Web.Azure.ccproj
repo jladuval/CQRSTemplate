@@ -42,6 +42,16 @@
   <ItemGroup>
     <PublishProfile Include="Profiles\dev-cqrs.azurePubxml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CQRS.Web\CQRS.Web.csproj">
+      <Name>CQRS.Web</Name>
+      <Project>{c338f0bb-a9c7-4bc5-8865-ea8679f718ea}</Project>
+      <Private>True</Private>
+      <RoleType>Web</RoleType>
+      <RoleName>CQRS.Web</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
+  </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
