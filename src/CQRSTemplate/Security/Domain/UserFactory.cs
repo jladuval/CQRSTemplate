@@ -1,8 +1,8 @@
-﻿using Base.DDD.Domain.Annotations;
-using Base.DDD.Domain.Support;
-
-namespace Security.Domain
+﻿namespace Security.Domain
 {
+    using Base.DDD.Domain.Annotations;
+    using Base.DDD.Domain.Support;
+
     [DomainFactory]
     public class UserFactory
     {

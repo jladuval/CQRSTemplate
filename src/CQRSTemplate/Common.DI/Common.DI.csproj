@@ -72,12 +72,16 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Base.Infrastructure.NHibernate\Base.Infrastructure.NHibernate.csproj">
-      <Project>{4c269870-76ce-498f-b886-030e2a759e5c}</Project>
+      <Project>{A69FAEB3-AC87-4A05-B476-7005BBE82989}</Project>
       <Name>Base.Infrastructure.NHibernate</Name>
     </ProjectReference>
     <ProjectReference Include="..\Base\Base.csproj">
       <Project>{093055ad-d153-497c-8573-0209748060f3}</Project>
       <Name>Base %28Base\Base%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure.Configuration\Infrastructure.Configuration.csproj">
+      <Project>{56ED39CF-5511-43D9-91EA-D298E708F243}</Project>
+      <Name>Infrastructure.Configuration</Name>
     </ProjectReference>
     <ProjectReference Include="..\Security.Interfaces\Security.Interfaces.csproj">
       <Project>{8ddafb9a-ff87-446e-bc29-08a14a8fe698}</Project>

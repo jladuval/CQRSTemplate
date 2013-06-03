@@ -1,15 +1,20 @@
-﻿using System;
-using System.Web.Mvc;
-using System.Web.Routing;
-using Castle.Windsor;
-using Base.DDD.Domain;
-using Base.StorageQueue;
-using Security.Interfaces.Application.Impersonation;
-using Common.DI;
-using System.Reflection;
-
-namespace Web
+﻿namespace Web
 {
+    using System;
+    using System.Reflection;
+    using System.Web.Mvc;
+    using System.Web.Routing;
+
+    using Base.StorageQueue;
+
+    using Castle.Windsor;
+
+    using Common.DI;
+
+    using Security.Interfaces.Application.Impersonation;
+
+    using Web.Migrations;
+
     public class MvcApplication : System.Web.HttpApplication
     {
         private static IWindsorContainer container { get; set; }
@@ -42,7 +47,20 @@ namespace Web
             container = ContainerInit.RegisterDI(Assembly.GetExecutingAssembly());
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-            container.Resolve<IStorageQueues>().InitializeAllQueues();
+            InitializeInfrastructure();
+            MigrateDatabaseSchema();
+        }
+
+        private static void InitializeInfrastructure()
+        {
+            var storageQueues = container.Resolve<IStorageQueues>();
+            storageQueues.InitializeAllQueues();
+        }
+
+        private static void MigrateDatabaseSchema()
+        {
+            var migrator = container.Resolve<Migrator>();
+            migrator.MigrateUp();
         }
     }
 }

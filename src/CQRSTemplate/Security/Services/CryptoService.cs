@@ -1,10 +1,11 @@
-﻿using System;
-using System.Security.Cryptography;
-using System.Text;
-using CQRS.Base.DDD.Domain.Annotations;
-
-namespace CQRS.Security.Application.Services
+﻿namespace Security.Services
 {
+    using System;
+    using System.Security.Cryptography;
+    using System.Text;
+
+    using Base.DDD.Domain.Annotations;
+
     [DomainService]
     public class CryptoService : ICryptoService
     {

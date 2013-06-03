@@ -1,19 +1,43 @@
-using System;
-using Base.DDD.Domain;
-using Base.DDD.Domain.Support;
-
 namespace Base.Infrastructure.NHibernate.Repositories
 {
-    public class GenericRepositoryForBaseEntity<TEntity> : GenericRepository<TEntity, int>
+    using System;
+    using System.Linq;
+
+    using global::NHibernate;
+
+    using Base.DDD.Domain;
+    using Base.DDD.Domain.Support;
+    using Base.Infrastructure.NHibernate.Extensions;
+
+    public class GenericRepositoryForBaseEntity<TEntity> : GenericRepository<TEntity, Guid>
         where TEntity : Entity
     {
-        public InjectorHelper InjectorHelper { get; set; }
+        private readonly InjectorHelper injectorHelper;
 
-        public override TEntity Load(int id)
+        public GenericRepositoryForBaseEntity(ISession session, InjectorHelper injectorHelper)
+            : base(session)
+        {
+            this.injectorHelper = injectorHelper;
+        }
+
+        #region CRUD operations
+
+        public override TEntity Load(Guid id)
         {
             var entity = base.Load(id);
-            if ( entity is AggregateRoot)
-                InjectorHelper.InjectDependencies((AggregateRoot)(object)entity);
+
+            var aggregateRoot = entity as AggregateRoot;
+
+            // Or we could just make AggregateRoot.EventPublisher getter public and check whether is already assigned
+            var containsKey = Session
+                .GetLocalKeys<TEntity>()
+                .Contains(id);
+
+            if (aggregateRoot != null && !containsKey)
+            {
+                // Inject aggregate root services
+                this.injectorHelper.InjectDependencies((AggregateRoot)(object)entity);
+            }
 
             return entity;
         }
@@ -24,10 +48,6 @@ namespace Base.Infrastructure.NHibernate.Repositories
             base.Save(entity);
         }
 
-        public override void Delete(int id)
-        {
-            TEntity entity = Load(id);
-            entity.MarkAsRemoved();
-        }
+        #endregion
     }
 }

@@ -51,23 +51,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\Commands\Handlers\LogInUserCommandHandler.cs" />
-    <Compile Include="Application\Commands\Handlers\LogOffUserCommandHandler.cs" />
-    <Compile Include="Application\Commands\Handlers\SignUpUserCommandHandler.cs" />
-    <Compile Include="Application\Events\UserCreatedEvent.cs" />
-    <Compile Include="Application\Extensions\AuthCookieExtensions.cs" />
-    <Compile Include="Application\Impersonation\DefaultIdentityProvider.cs" />
-    <Compile Include="Application\Services\AuthCookieService.cs" />
-    <Compile Include="Application\Services\CryptoService.cs" />
-    <Compile Include="Application\Readers\UserReader.cs" />
-    <Compile Include="Application\Services\ICryptoService.cs" />
+    <Compile Include="Commands\Handlers\LogInUserCommandHandler.cs" />
+    <Compile Include="Commands\Handlers\LogOffUserCommandHandler.cs" />
+    <Compile Include="Commands\Handlers\SignUpUserCommandHandler.cs" />
+    <Compile Include="Domain\IRoleRepository.cs" />
+    <Compile Include="Domain\Role.cs" />
+    <Compile Include="Domain\RoleMap.cs" />
+    <Compile Include="Events\UserCreatedEvent.cs" />
+    <Compile Include="Extensions\AuthCookieExtensions.cs" />
+    <Compile Include="Impersonation\DefaultIdentityProvider.cs" />
+    <Compile Include="Repositories\RoleRepository.cs" />
+    <Compile Include="Services\AuthCookieService.cs" />
+    <Compile Include="Services\CryptoService.cs" />
+    <Compile Include="Readers\UserReader.cs" />
+    <Compile Include="Services\ICryptoService.cs" />
     <Compile Include="Domain\IUserRepository.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Domain\UserFactory.cs" />
     <Compile Include="Domain\UserMap.cs" />
-    <Compile Include="Infrastructure\Mailing\Events\UserCreatedEventListener.cs" />
-    <Compile Include="Infrastructure\Mailing\MailData\VerificationEmailData.cs" />
-    <Compile Include="Infrastructure\Repositories\UserRepository.cs" />
+    <Compile Include="Mailing\Events\UserCreatedEventListener.cs" />
+    <Compile Include="Mailing\MailData\VerificationEmailData.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -75,7 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Base.Infrastructure.NHibernate\Base.Infrastructure.NHibernate.csproj">
-      <Project>{4c269870-76ce-498f-b886-030e2a759e5c}</Project>
+      <Project>{A69FAEB3-AC87-4A05-B476-7005BBE82989}</Project>
       <Name>Base.Infrastructure.NHibernate</Name>
     </ProjectReference>
     <ProjectReference Include="..\Base.Mailing\Base.Mailing.csproj">

@@ -1,13 +1,15 @@
-﻿using System;
-using System.Web;
-using System.Web.Security;
-using CQRS.Base.DDD.Domain.Annotations;
-using CQRS.Security.Application.Extensions;
-using CQRS.Security.Interfaces.Application;
-using CQRS.Security.Interfaces.Application.Services;
-
-namespace CQRS.Security.Application.Services
+﻿namespace Security.Services
 {
+    using System;
+    using System.Web;
+    using System.Web.Security;
+
+    using Base.DDD.Domain.Annotations;
+
+    using Security.Extensions;
+    using Security.Interfaces.Application;
+    using Security.Interfaces.Application.Services;
+
     [DomainService]
     public class AuthCookieService : IAuthCookieService
     {

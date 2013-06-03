@@ -1,8 +1,9 @@
-﻿using System;
-using CQRS.Base.DDD.Domain;
-
-namespace CQRS.Security.Application.Events
+﻿namespace Security.Events
 {
+    using System;
+
+    using Base.DDD.Domain;
+
     public class UserCreatedEvent : IDomainEvent
     {
         public Guid UserId { get; set; }

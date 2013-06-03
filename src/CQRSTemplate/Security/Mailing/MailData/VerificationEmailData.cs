@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace CQRS.Security.Infrastructure.Mailing.MailData
+﻿namespace Security.Mailing.MailData
 {
+    using System;
+
     [Serializable]
     public class VerificationEmailData 
     {

@@ -1,22 +1,39 @@
 ﻿namespace Base.Infrastructure.NHibernate.Repositories
 {
+    using global::NHibernate;
+
     public class GenericRepository<TEntity, TKey> where TEntity : class
     {
-        public IEntityManager EntityManager { get; set; }
+        public GenericRepository(ISession session)
+        {
+            Session = session;
+        }
+
+        protected ISession Session { get; private set; }
+
+        #region CRUD operations
 
         public virtual TEntity Load(TKey id)
         {
-            return EntityManager.CurrentSession.Get<TEntity>(id);
+            var entity = Session.Get<TEntity>(id);
+            return entity;
         }
 
+        /// <summary>
+        /// Deletes the entity from local storage
+        /// </summary>
+        /// <param name="id">Entity identifier</param>
         public virtual void Delete(TKey id)
         {
-            EntityManager.CurrentSession.Delete(Load(id));
+            var entity = Load(id);
+            Session.Delete(entity);
         }
 
         public virtual void Save(TEntity entity)
         {
-            EntityManager.CurrentSession.SaveOrUpdate(entity);
+            Session.SaveOrUpdate(entity);
         }
+
+        #endregion
     }
 }

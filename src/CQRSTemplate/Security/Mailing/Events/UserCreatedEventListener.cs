@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
-using CQRS.Base.DDD.Infrastructure.Events;
-using CQRS.Base.Mailing;
-using CQRS.Security.Application.Events;
-using CQRS.Security.Infrastructure.Mailing.MailData;
-
-namespace CQRS.Security.Infrastructure.Mailing.Events
+﻿namespace Security.Mailing.Events
 {
+    using System.Collections.Generic;
+
+    using Base.DDD.Infrastructure.Events;
+    using Base.Mailing;
+
+    using Security.Events;
+    using Security.Mailing.MailData;
+
     [EventListeners]
     public class UserCreatedEventListener : IEventListener<UserCreatedEvent>
     {

@@ -2,9 +2,7 @@
 {
     public enum UserRoles
     {
-        Administrator,
-        Moderator,
-        Observer,
-        Respondent
+        User,
+        Administrator
     }
 }

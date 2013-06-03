@@ -1,10 +1,21 @@
 namespace Common.DI
 {
-    using System;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
     using System.Web;
     using System.Web.Mvc;
+
+    using Base.CQRS.Commands.Decorator;
+    using Base.CQRS.Commands.Handler;
+    using Base.CQRS.Query.Attributes;
+    using Base.DDD.Domain.Annotations;
+    using Base.DDD.Infrastructure.Events;
+    using Base.DDD.Infrastructure.Events.Implementation;
+    using Base.Infrastructure.Attributes;
+    using Base.Infrastructure.NHibernate.Configuration;
+    using Base.Infrastructure.NHibernate.Conventions;
 
     using Castle.Core;
     using Castle.Facilities.Startable;
@@ -15,17 +26,13 @@ namespace Common.DI
     using Castle.MicroKernel.Resolvers.SpecializedResolvers;
     using Castle.Windsor;
 
+    using Infrastructure.Configuration;
+
     using NHibernate;
 
-    using Base.CQRS.Commands.Decorator;
-    using Base.CQRS.Commands.Handler;
-    using Base.CQRS.Query.Attributes;
-    using Base.DDD.Domain.Annotations;
-    using Base.DDD.Infrastructure.Events;
-    using Base.DDD.Infrastructure.Events.Implementation;
-    using Base.Infrastructure.Attributes;
-    using Base.Infrastructure.NHibernate;
-    using Base.Infrastructure.NHibernate.Conventions;
+    using Security.Services;
+
+    using global::NHibernate.Cfg;
 
     public class ContainerInit
     {
@@ -49,6 +56,7 @@ namespace Common.DI
             RegisterStatefullComponents(container, webAssembly);
             RegisterEventListeners(container);
             RegisterCommandHandlers(container);
+            RegisterConfiguration(container);
             SetMvcContainer(container);
             return container;
         }
@@ -77,12 +85,22 @@ namespace Common.DI
         {
             container.Register(
                 Classes.FromAssemblyInDirectory(new AssemblyFilter(HttpRuntime.BinDirectory))
-                    .Where(t => t.IsComponentLifestyle(ComponentLifestyle.Transient) || t.IsDefined(typeof(DomainFactoryAttribute), true)
+                    .Where(t => t.IsComponentLifestyle(ComponentLifestyle.Transient) 
+                        || t.IsDefined(typeof(DomainFactoryAttribute), true)
                         || t.IsDefined(typeof(DomainRepositoryImplementationAttribute), true)
-                        || t.IsDefined(typeof(DomainServiceAttribute), true) || t.IsDefined(typeof(ReaderAttribute), true))
+                        || t.IsDefined(typeof(DomainServiceAttribute), true) 
+                        || t.IsDefined(typeof(ReaderAttribute), true))
                     .WithServiceAllInterfaces()
                     .WithServiceSelf()
                     .LifestyleTransient());
+        }
+
+        private static Assembly[] GetAssemblies()
+        {
+            return new[]
+                {
+                    typeof(CryptoService).Assembly, 
+                };
         }
 
         private static void RegisterORM(IWindsorContainer container)
@@ -93,20 +111,7 @@ namespace Common.DI
             AutomappingConfiguration.IsComponentPredicate =
                 t => t.IsDefined(typeof(DomainValueObjectAttribute), true);
 
-            container.Register(Component.For<ISessionFactory>()
-                                   .UsingFactoryMethod(() => EntityManager.SessionFactory)
-                                   .LifestyleSingleton());
-
-            container.Register(Component.For<ISession>()
-                                   .UsingFactoryMethod(EntityManager.SessionFactory.OpenSession)
-                                   .LifestylePerWebRequest());
-
-            container.Register(Component.For<IPerRequestSessionFactory>()
-                                   .AsFactory());
-
-            container.Register(Component.For<IEntityManager>()
-                                   .ImplementedBy<EntityManager>()
-                                   .LifestyleSingleton());
+            container.Register(Component.For<ISession>());
         }
 
         private static void RegisterMvcControllers(IWindsorContainer container, Assembly webAssembly)
@@ -140,15 +145,21 @@ namespace Common.DI
                                    .LifestyleSingleton());
         }
 
+        private static void RegisterConfiguration(IWindsorContainer container)
+        {
+            container.Register(Component
+                .For<IPersistenceSettings>()
+                .ImplementedBy<ApplicationSettings>());
+        }
+
         private static void RegisterCommandHandlers(IWindsorContainer container)
         {
             // Register decorators
             container.Register(
                 Component.For(typeof(ICommandHandler<>)).ImplementedBy(typeof(TransactionalCommandHandlerDecorator<>)),
-                Component.For(typeof(ICommandHandler<>)).ImplementedBy(typeof(CommitNHibernateCommandHandlerDecorator<>)),
                 Component.For(typeof(ICommandHandler<>)).ImplementedBy(typeof(ConatinerCommandHandlerDecorator<>)));
 
-            foreach (var assembly in EntityManager.GetAssemblies())
+            foreach (var assembly in GetAssemblies())
             {
                 foreach (var registration in from f in assembly.GetTypes()
                                              where f.IsClass
@@ -172,9 +183,121 @@ namespace Common.DI
 
         private static void AddResolversAndFacilities(IWindsorContainer container)
         {
+            container.Kernel.Resolver.AddSubResolver(new CachingSessionResolver());
             container.Kernel.Resolver.AddSubResolver(new ArrayResolver(container.Kernel));
             container.AddFacility<TypedFactoryFacility>();
             container.AddFacility<StartableFacility>();
+        }
+
+        private class CachingSessionResolver : CachingFactorySessionResolver
+        {
+            private static readonly object Locker = new object();
+
+            // Cache sessions at the web-request level
+            private static IDictionary SessionCache
+            {
+                get { return HttpContext.Current.Items; }
+            }
+
+            protected override ISession BuildSession(Assembly assembly)
+            {
+                lock (Locker)
+                {
+                    var assemblyName = assembly.GetName();
+                    var cacheKey = assemblyName.Name;
+                    ISession session;
+                    if (SessionCache.Contains(cacheKey))
+                    {
+                        session = (ISession)SessionCache[cacheKey];
+                    }
+                    else
+                    {
+                        session = base.BuildSession(assembly);
+                        SessionCache.Add(cacheKey, session);
+                    }
+
+                    return session;
+                }
+            }
+        }
+
+        private class CachingFactorySessionResolver : SessionResolver
+        {
+            // Consider using a thread safe collection (if it makes sense): http://msdn.microsoft.com/en-us/library/dd997305.aspx
+
+            // Cache session factories at the applicaiton level
+            private static readonly Dictionary<string, ISessionFactory> SessionFactoryCache =
+                new Dictionary<string, ISessionFactory>();
+
+            protected override ISessionFactory BuildSessionFactory(Assembly assembly)
+            {
+                lock (SessionFactoryCache)
+                {
+                    var assemblyName = assembly.GetName();
+                    var cacheKey = assemblyName.Name;
+                    ISessionFactory sessionFactory;
+                    if (SessionFactoryCache.ContainsKey(cacheKey))
+                    {
+                        sessionFactory = SessionFactoryCache[cacheKey];
+                    }
+                    else
+                    {
+                        sessionFactory = base.BuildSessionFactory(assembly);
+                        SessionFactoryCache.Add(cacheKey, sessionFactory);
+                    }
+                    return sessionFactory;
+                }
+            }
+        }
+
+        private class SessionResolver : ISubDependencyResolver
+        {
+            public bool CanResolve(
+                CreationContext context,
+                ISubDependencyResolver contextHandlerResolver,
+                ComponentModel model,
+                DependencyModel dependency)
+            {
+                var canResolve = dependency.TargetType == typeof(ISession);
+                return canResolve;
+            }
+
+            public object Resolve(CreationContext context, ISubDependencyResolver contextHandlerResolver, ComponentModel model, DependencyModel dependency)
+            {
+                var implementation = model.Implementation;
+                var assembly = implementation.Assembly;
+
+                return Resolve(assembly);
+            }
+
+            private object Resolve(Assembly assembly)
+            {
+                var session = BuildSession(assembly);
+                return session;
+            }
+
+            protected virtual ISession BuildSession(Assembly assembly)
+            {
+                var sessionFactory = BuildSessionFactory(assembly);
+                var sessionBuilder = new NHibernateSessionBuilder(sessionFactory);
+                var session = sessionBuilder.Build();
+                return session;
+            }
+
+            protected virtual ISessionFactory BuildSessionFactory(Assembly assembly)
+            {
+                var configuration = BuildNHibernateConfiguration(assembly);
+                var sessionFactoryBuilder = new NHibernateSessionFactoryBuilder(configuration);
+                var sessionFactory = sessionFactoryBuilder.Build();
+                return sessionFactory;
+            }
+
+            // Builds NHibernateConfiguration for the given assembly (bounded context)
+            protected virtual Configuration BuildNHibernateConfiguration(Assembly assembly)
+            {
+                var configurationBuilder = new NHibernateConfigurationBuilder("db", assembly);
+                return configurationBuilder.Build();
+            }
         }
     }
 }

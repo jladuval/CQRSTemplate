@@ -1,10 +1,12 @@
-﻿using System.Web;
-using System.Web.Security;
-using CQRS.Base.CQRS.Commands.Handler;
-using CQRS.Security.Interfaces.Commands;
-
-namespace CQRS.Security.Application.Commands.Handlers
+﻿namespace Security.Commands.Handlers
 {
+    using System.Web;
+    using System.Web.Security;
+
+    using Base.CQRS.Commands.Handler;
+
+    using Security.Interfaces.Commands;
+
     public class LogOffUserCommandHandler : ICommandHandler<LogOffUserCommand>
     {
         public void Handle(LogOffUserCommand command)

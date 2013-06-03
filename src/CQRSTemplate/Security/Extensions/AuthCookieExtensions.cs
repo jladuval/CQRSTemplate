@@ -1,11 +1,11 @@
-﻿using System.Web;
-using System.Web.Script.Serialization;
-using System.Web.Security;
-using CQRS.Security.Interfaces.Application;
-
-namespace CQRS.Security.Application.Extensions
+﻿namespace Security.Extensions
 {
     using System;
+    using System.Web;
+    using System.Web.Script.Serialization;
+    using System.Web.Security;
+
+    using Security.Interfaces.Application;
 
     public static class AuthCookieExtensions
     {

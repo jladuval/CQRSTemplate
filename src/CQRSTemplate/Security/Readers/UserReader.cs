@@ -1,35 +1,48 @@
-﻿using System.Linq;
-using CQRS.Base.CQRS.Query.Attributes;
-using CQRS.Base.Infrastructure.EntityFramework;
-using CQRS.Security.Application.Services;
-using CQRS.Security.Interfaces.Presentation;
-using CQRS.Security.Interfaces.Queries;
-using CQRS.Base.Entities.Models;
-
-namespace CQRS.Security.Application.Readers
+﻿namespace Security.Readers
 {
+    using System;
+    using System.Linq;
+
+    using Base.CQRS.Query.Attributes;
+
+    using NHibernate;
+    using NHibernate.Linq;
+
+    using Security.Domain;
+    using Security.Interfaces.Application;
+    using Security.Interfaces.Presentation;
+    using Security.Interfaces.Queries;
+    using Security.Services;
+
     [Reader]
     public class UserReader : ISecurityUserReader
     {
-        public IEntityManager EntityManager { get; set; }
+        private readonly ISession _session;
 
-        public ICryptoService CryptoService { get; set; }
+        private readonly ICryptoService _cryptoService;
+
+        public UserReader(ISession session, ICryptoService cryptoService)
+        {
+            _session = session;
+            _cryptoService = cryptoService;
+        }
 
         public CheckUserCredentialsDto CheckUserCredentials(CheckUserCredentialsQuery query)
         {
-            var user = EntityManager.CurrentContext.Set<User>().Where(x => x.Email == query.Email).FirstOrDefault();
+            var user = _session.Query<User>().FirstOrDefault(x => x.Email == query.Email);
             return user != null
-                   && CryptoService.CheckPassword(user.Password, query.Password, user.Salt)
+                   && _cryptoService.CheckPassword(user.Password, query.Password, user.Salt)
                        ? new CheckUserCredentialsDto
                            {
                                UserId = user.Id,
-                               Roles = user.Roles
+                               Roles = user.Roles.Select(x => (UserRoles)Enum.Parse(typeof(UserRoles), x.Name, true)).ToList()
                            }
                        : null;
         }
         
-        public bool UserExists(UserExistsQuery query) {
-            return EntityManager.CurrentContext.Set<User>().FirstOrDefault(x => x.Email == query.Email) != null;
+        public bool UserExists(UserExistsQuery query) 
+        {
+            return _session.Query<User>().FirstOrDefault(x => x.Email == query.Email) != null;
         }
     }
 }

@@ -1,13 +1,15 @@
-﻿using System;
-using System.Web;
-using CQRS.Base.CQRS.Commands.Attributes;
-using CQRS.Base.CQRS.Commands.Handler;
-using CQRS.Security.Application.Extensions;
-using CQRS.Security.Interfaces.Application;
-using CQRS.Security.Interfaces.Commands;
-
-namespace CQRS.Security.Application.Commands.Handlers
+﻿namespace Security.Commands.Handlers
 {
+    using System;
+    using System.Web;
+
+    using Base.CQRS.Commands.Attributes;
+    using Base.CQRS.Commands.Handler;
+
+    using Security.Extensions;
+    using Security.Interfaces.Application;
+    using Security.Interfaces.Commands;
+
     [CommandHandler]
     public class LogInUserCommandHandler : ICommandHandler<LogInUserCommand>
     {

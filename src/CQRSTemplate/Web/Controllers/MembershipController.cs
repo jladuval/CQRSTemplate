@@ -8,17 +8,24 @@ namespace Web.Controllers
 {
     public class MembershipController : Controller
     {
-        public IGate Gate { get; set; }
-        public ISecurityUserReader SecurityUserReader { get; set; }
+        private readonly ISecurityUserReader _securityUserReader;
+
+        private readonly IGate _gate;
+
+        public MembershipController(ISecurityUserReader securityUserReader, IGate gate)
+        {
+            _securityUserReader = securityUserReader;
+            _gate = gate;
+        }        
 
         [Authorize]
         public ActionResult LogOff()
         {
-            Gate.Dispatch(new LogOffUserCommand());
+            _gate.Dispatch(new LogOffUserCommand());
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult LogIn()
+/*        public ActionResult LogIn()
         {
             return View(new LogInModel { IsSignUp = false });
         }
@@ -38,9 +45,9 @@ namespace Web.Controllers
                 var pass = model.LoginPassword;
                 var rememberMe = model.RememberMe;
                 
-                var user = SecurityUserReader.CheckUserCredentials(new CheckUserCredentialsQuery { Email = email, Password = pass });
+                var user = this._securityUserReader.CheckUserCredentials(new CheckUserCredentialsQuery { Email = email, Password = pass });
                 if (user != null) {
-                    Gate.Dispatch(new LogInUserCommand { Email = email, UserId = user.UserId, RememberMe = rememberMe, Roles = user.Roles });
+                    this._gate.Dispatch(new LogInUserCommand { Email = email, UserId = user.UserId, RememberMe = rememberMe, Roles = user.Roles });
                     return RedirectToAction("Index", "Home", null);
                 } else {
                     ModelState.AddModelError("LoginPassword", "Invalid username or password.");
@@ -62,12 +69,12 @@ namespace Web.Controllers
         		var email = model.Email;
         		var password = model.SignUpPassword;
         		
-        		Gate.Dispatch(new SignUpUserCommand(email, password));
-        		var user = SecurityUserReader.CheckUserCredentials(new CheckUserCredentialsQuery { Email = email, Password = password });
-        		Gate.Dispatch(new LogInUserCommand { Email = email, UserId = user.UserId, RememberMe = model.RememberMe, Roles = user.Roles });
+        		this._gate.Dispatch(new SignUpUserCommand(email, password));
+        		var user = this._securityUserReader.CheckUserCredentials(new CheckUserCredentialsQuery { Email = email, Password = password });
+        		this._gate.Dispatch(new LogInUserCommand { Email = email, UserId = user.UserId, RememberMe = model.RememberMe, Roles = user.Roles });
         		return RedirectToAction("Index", "Home", null);
         	}
         	return View("LogIn", model);
-        }
+        }*/
     }
 }

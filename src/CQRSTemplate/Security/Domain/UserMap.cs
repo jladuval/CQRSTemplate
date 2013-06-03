@@ -1,23 +1,29 @@
-﻿using FluentNHibernate.Mapping;
-using Security.Interfaces.Application;
-
-namespace Security.Domain
+﻿namespace Security.Domain
 {
-    public class UserMap : SubclassMap<User>
+    using System;
+
+    using FluentNHibernate.Mapping;
+
+    public class UserMap : ClassMap<User>
     {
         public UserMap()
         {
             Table("Users");
-            Map(x => x.Name);
-            Map(x => x.Email).Unique();
-            Map(x => x.Password);
-            Map(x => x.Salt);
-            Map(x => x.IsVerified);
+            Id(x => x.Id).GeneratedBy.GuidComb().UnsavedValue(Guid.Empty);
+            Map(x => x.CreatedDate).Not.Nullable();
+            Map(x => x.ModifiedDate).Not.Nullable();
+            Map(x => x.FirstName).Nullable();
+            Map(x => x.LastName).Nullable();
+            Map(x => x.Email).Not.Nullable().Unique();
+            Map(x => x.Password).Nullable();
+            Map(x => x.Salt).Nullable();
+            Map(x => x.IsVerified).Nullable();
             Map(x => x.VerificationCode);
-            HasMany(x => x.Roles)
-                .Table("UserRoles")
-                .Element("Roles", e => e.Type<NHibernate.Type.EnumStringType<UserRoles>>())
-                .AsSet();
+            HasManyToMany(x => x.Roles)
+                .Table("UsersInRoles")
+                .ParentKeyColumn("UserId")
+                .ChildKeyColumn("RoleId")
+                .Not.LazyLoad();
         }
     }
 }

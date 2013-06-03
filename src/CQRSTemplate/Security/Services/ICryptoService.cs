@@ -1,4 +1,4 @@
-﻿namespace CQRS.Security.Application.Services
+﻿namespace Security.Services
 {
     public interface ICryptoService
     {

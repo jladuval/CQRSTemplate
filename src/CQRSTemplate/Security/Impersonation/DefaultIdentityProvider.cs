@@ -1,11 +1,13 @@
-﻿using System.Web;
-using CQRS.Base.DDD.Domain.Annotations;
-using CQRS.Security.Interfaces.Application;
-using CQRS.Security.Interfaces.Application.Impersonation;
-using CQRS.Security.Interfaces.Application.Services;
-
-namespace CQRS.Security.Application.Impersonation
+﻿namespace Security.Impersonation
 {
+    using System.Web;
+
+    using Base.DDD.Domain.Annotations;
+
+    using Security.Interfaces.Application;
+    using Security.Interfaces.Application.Impersonation;
+    using Security.Interfaces.Application.Services;
+
     [DomainService]
     public class DefaultIdentityProvider : IIdentityProvider
     {

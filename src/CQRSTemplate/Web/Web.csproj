@@ -62,12 +62,6 @@
     <Reference Include="Castle.Windsor">
       <HintPath>..\packages\Castle.Windsor.3.2.0\lib\net40\Castle.Windsor.dll</HintPath>
     </Reference>
-    <Reference Include="FluentNHibernate">
-      <HintPath>..\packages\FluentNHibernate.1.3.0.733\lib\FluentNHibernate.dll</HintPath>
-    </Reference>
-    <Reference Include="Iesi.Collections">
-      <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.Edm, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -94,10 +88,6 @@
     <Reference Include="Microsoft.WindowsAzure.Storage, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WindowsAzure.Storage.2.0.5.1\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
-    </Reference>
-    <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NHibernate.3.3.3.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=2.0.1.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -168,10 +158,10 @@
     <Compile Include="App_Start\BootstrapBundleConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MembershipController.cs" />
-    <Compile Include="Controllers\MyDetailsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Migrator.cs" />
     <Compile Include="Models\Home\UserModel.cs" />
     <Compile Include="Models\Membership\LogInModel.cs" />
     <Compile Include="Models\MyDetails\MyDetailsModel.cs" />
@@ -179,14 +169,10 @@
     <Compile Include="WindsorControllerFactory.asax.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <None Include="Scripts\Custom\main.js" />
-    <None Include="Scripts\Custom\plugins.js" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\Custom\mydetails.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
@@ -235,10 +221,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\" />
-    <Folder Include="DI\" />
     <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="Scripts\Custom\" />
     <Folder Include="Views\Membership\" />
-    <Folder Include="Views\MyDetails\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -261,6 +246,14 @@
     <ProjectReference Include="..\Common.DI\Common.DI.csproj">
       <Project>{10933c4c-c805-469c-866a-782a6b2dd2ad}</Project>
       <Name>Common.DI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure.Configuration\Infrastructure.Configuration.csproj">
+      <Project>{56ED39CF-5511-43D9-91EA-D298E708F243}</Project>
+      <Name>Infrastructure.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Infrastructure.Data\Infrastructure.Data.csproj">
+      <Project>{9F4E77BE-B535-4338-B2CE-462592D7E0EB}</Project>
+      <Name>Infrastructure.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Security.Interfaces\Security.Interfaces.csproj">
       <Project>{8ddafb9a-ff87-446e-bc29-08a14a8fe698}</Project>

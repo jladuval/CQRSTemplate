@@ -3,8 +3,8 @@
     using System.Collections.Generic;
 
     using Base.DDD.Domain;
-    using Security.Application.Events;
-    using Security.Interfaces.Application;
+
+    using Security.Events;
 
     public class User : AggregateRoot
     {
@@ -12,7 +12,9 @@
 
         public string Password { get; set; }
 
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
 
         public string Salt { get; set; }
 
@@ -20,7 +22,7 @@
 
         public bool IsVerified { get; set; }
 
-        public IEnumerable<UserRoles> Roles { get; set; }
+        public IList<Role> Roles { get; set; }
 
         public User()
         {
