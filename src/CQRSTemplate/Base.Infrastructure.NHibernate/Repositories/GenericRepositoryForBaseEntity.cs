@@ -1,0 +1,33 @@
+using System;
+using Base.DDD.Domain;
+using Base.DDD.Domain.Support;
+
+namespace Base.Infrastructure.NHibernate.Repositories
+{
+    public class GenericRepositoryForBaseEntity<TEntity> : GenericRepository<TEntity, int>
+        where TEntity : Entity
+    {
+        public InjectorHelper InjectorHelper { get; set; }
+
+        public override TEntity Load(int id)
+        {
+            var entity = base.Load(id);
+            if ( entity is AggregateRoot)
+                InjectorHelper.InjectDependencies((AggregateRoot)(object)entity);
+
+            return entity;
+        }
+
+        public override void Save(TEntity entity)
+        {
+            entity.ModifiedDate = DateTime.UtcNow;
+            base.Save(entity);
+        }
+
+        public override void Delete(int id)
+        {
+            TEntity entity = Load(id);
+            entity.MarkAsRemoved();
+        }
+    }
+}
