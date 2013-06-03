@@ -164,7 +164,6 @@
     <Compile Include="Migrations\Migrator.cs" />
     <Compile Include="Models\Home\UserModel.cs" />
     <Compile Include="Models\Membership\LogInModel.cs" />
-    <Compile Include="Models\MyDetails\MyDetailsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WindsorControllerFactory.asax.cs" />
   </ItemGroup>
@@ -230,9 +229,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Home\_UserForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Base.StorageQueue\Base.StorageQueues.csproj">

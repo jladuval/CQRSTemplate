@@ -24,7 +24,7 @@
         {
             var username = Guid.NewGuid().ToString();
             var password = Guid.NewGuid().ToString();
-            _gate.Dispatch(new SignUpUserCommand(username,password));
+            _gate.Dispatch(new SignUpUserCommand(username, password));
             _securityUserReader.CheckUserCredentials(
                 new CheckUserCredentialsQuery { Email = username, Password = password });
             return View();
