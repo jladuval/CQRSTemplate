@@ -1,11 +1,11 @@
-﻿namespace Base.Infrastructure.NHibernate.Configuration
+﻿namespace Infrastructure.NHibernate.Configuration
 {
     using System.Reflection;
 
     using FluentNHibernate.Cfg;
     using FluentNHibernate.Cfg.Db;
 
-    using NHibernateConfiguration = global::NHibernate.Cfg.Configuration;
+    using global::NHibernate.Cfg;
 
     public class NHibernateConfigurationBuilder
     {
@@ -19,7 +19,7 @@
             _mappingsAssembly = mappingsAssembly;
         }
 
-        public NHibernateConfiguration Build()
+        public Configuration Build()
         {
             // Setting common configuration
             var fluentConfig = Fluently.Configure()
@@ -40,7 +40,7 @@
             return config;
         }
 
-        private void ApplyAdditionalConfiguration(NHibernateConfiguration c)
+        private void ApplyAdditionalConfiguration(Configuration c)
         {
             c.SetProperty(global::NHibernate.Cfg.Environment.UseProxyValidator, bool.FalseString);
 #if DEBUG

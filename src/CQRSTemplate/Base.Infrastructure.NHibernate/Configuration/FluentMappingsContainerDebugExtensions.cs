@@ -1,5 +1,5 @@
 ﻿#if DEBUG
-namespace Base.Infrastructure.NHibernate.Configuration
+namespace Infrastructure.NHibernate.Configuration
 {
     using FluentNHibernate.Cfg;
 

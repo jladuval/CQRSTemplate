@@ -52,12 +52,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Base.StorageQueue\Base.StorageQueues.csproj">
       <Project>{cd07e9e5-d575-4c0c-b398-39c7d83c6ddf}</Project>
       <Name>Base.StorageQueues</Name>

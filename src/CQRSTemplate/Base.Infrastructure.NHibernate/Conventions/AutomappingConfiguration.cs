@@ -1,11 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using FluentNHibernate;
-using FluentNHibernate.Automapping;
-
-namespace Base.Infrastructure.NHibernate.Conventions
+namespace Infrastructure.NHibernate.Conventions
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
+
+    using FluentNHibernate;
+    using FluentNHibernate.Automapping;
+
     public class AutomappingConfiguration : DefaultAutomappingConfiguration
     {
         public static Func<Type, bool> IsEntityPredicate = t => false;

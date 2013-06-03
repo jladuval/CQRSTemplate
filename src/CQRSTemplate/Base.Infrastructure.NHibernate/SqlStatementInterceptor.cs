@@ -1,4 +1,4 @@
-﻿namespace Base.Infrastructure.NHibernate
+﻿namespace Infrastructure.NHibernate
 {
     using System.Diagnostics;
 

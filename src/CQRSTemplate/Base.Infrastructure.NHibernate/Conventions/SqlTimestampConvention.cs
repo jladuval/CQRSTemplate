@@ -1,8 +1,8 @@
-using FluentNHibernate.Conventions;
-using FluentNHibernate.Conventions.Instances;
-
-namespace Base.Infrastructure.NHibernate.Conventions
+namespace Infrastructure.NHibernate.Conventions
 {
+    using FluentNHibernate.Conventions;
+    using FluentNHibernate.Conventions.Instances;
+
     internal class SqlTimestampConvention : IVersionConvention
     {
         public void Apply(IVersionInstance instance)

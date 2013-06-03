@@ -14,8 +14,6 @@ namespace Common.DI
     using Base.DDD.Infrastructure.Events;
     using Base.DDD.Infrastructure.Events.Implementation;
     using Base.Infrastructure.Attributes;
-    using Base.Infrastructure.NHibernate.Configuration;
-    using Base.Infrastructure.NHibernate.Conventions;
 
     using Castle.Core;
     using Castle.Facilities.Startable;
@@ -27,6 +25,8 @@ namespace Common.DI
     using Castle.Windsor;
 
     using Infrastructure.Configuration;
+    using Infrastructure.NHibernate.Configuration;
+    using Infrastructure.NHibernate.Conventions;
 
     using NHibernate;
 

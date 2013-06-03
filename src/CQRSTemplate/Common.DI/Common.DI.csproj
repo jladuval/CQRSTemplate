@@ -71,9 +71,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Base.Infrastructure.NHibernate\Base.Infrastructure.NHibernate.csproj">
+    <ProjectReference Include="..\Base.Infrastructure.NHibernate\Infrastructure.NHibernate.csproj">
       <Project>{A69FAEB3-AC87-4A05-B476-7005BBE82989}</Project>
-      <Name>Base.Infrastructure.NHibernate</Name>
+      <Name>Infrastructure.NHibernate</Name>
     </ProjectReference>
     <ProjectReference Include="..\Base\Base.csproj">
       <Project>{093055ad-d153-497c-8573-0209748060f3}</Project>
@@ -89,7 +89,7 @@
     </ProjectReference>
     <ProjectReference Include="..\Security\Security.csproj">
       <Project>{819bcb47-8aa8-46eb-8151-823986bed414}</Project>
-      <Name>Security %28Security\Security%29</Name>
+      <Name>Security %28Bounded Contexts\Security\Security%29</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

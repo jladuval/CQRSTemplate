@@ -78,9 +78,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Base.Infrastructure.NHibernate\Base.Infrastructure.NHibernate.csproj">
+    <ProjectReference Include="..\Base.Infrastructure.NHibernate\Infrastructure.NHibernate.csproj">
       <Project>{A69FAEB3-AC87-4A05-B476-7005BBE82989}</Project>
-      <Name>Base.Infrastructure.NHibernate</Name>
+      <Name>Infrastructure.NHibernate</Name>
     </ProjectReference>
     <ProjectReference Include="..\Base.Mailing\Base.Mailing.csproj">
       <Project>{a6d4aa68-1dec-49ad-a43f-ec1e9fa9ac51}</Project>

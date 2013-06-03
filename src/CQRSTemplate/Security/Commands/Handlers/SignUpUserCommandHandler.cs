@@ -4,7 +4,8 @@
 
     using Base.CQRS.Commands.Attributes;
     using Base.CQRS.Commands.Handler;
-    using Base.Infrastructure.NHibernate.Repositories;
+
+    using Infrastructure.NHibernate.Repositories;
 
     using Security.Domain;
     using Security.Interfaces.Commands;

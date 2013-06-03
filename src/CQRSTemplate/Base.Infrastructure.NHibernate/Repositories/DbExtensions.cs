@@ -1,4 +1,4 @@
-﻿namespace Base.Infrastructure.NHibernate.Repositories
+﻿namespace Infrastructure.NHibernate.Repositories
 {
     using System.Data;
 

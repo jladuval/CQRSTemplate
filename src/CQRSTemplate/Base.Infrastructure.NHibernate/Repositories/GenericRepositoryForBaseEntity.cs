@@ -1,13 +1,14 @@
-namespace Base.Infrastructure.NHibernate.Repositories
+namespace Infrastructure.NHibernate.Repositories
 {
     using System;
     using System.Linq;
 
-    using global::NHibernate;
+    using Infrastructure.NHibernate.Extensions;
 
     using Base.DDD.Domain;
     using Base.DDD.Domain.Support;
-    using Base.Infrastructure.NHibernate.Extensions;
+
+    using global::NHibernate;
 
     public class GenericRepositoryForBaseEntity<TEntity> : GenericRepository<TEntity, Guid>
         where TEntity : Entity

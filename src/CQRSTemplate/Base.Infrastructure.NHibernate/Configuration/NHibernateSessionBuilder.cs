@@ -1,4 +1,4 @@
-﻿namespace Base.Infrastructure.NHibernate.Configuration
+﻿namespace Infrastructure.NHibernate.Configuration
 {
     using global::NHibernate;
 

@@ -1,10 +1,10 @@
-using FluentNHibernate.Conventions;
-using FluentNHibernate.Conventions.AcceptanceCriteria;
-using FluentNHibernate.Conventions.Inspections;
-using FluentNHibernate.Conventions.Instances;
-
-namespace Base.Infrastructure.NHibernate.Conventions
+namespace Infrastructure.NHibernate.Conventions
 {
+    using FluentNHibernate.Conventions;
+    using FluentNHibernate.Conventions.AcceptanceCriteria;
+    using FluentNHibernate.Conventions.Inspections;
+    using FluentNHibernate.Conventions.Instances;
+
     public class SetEnumTypeConvention : IUserTypeConvention
     {
         public void Accept(IAcceptanceCriteria<IPropertyInspector> criteria)

@@ -1,4 +1,4 @@
-namespace Base.Infrastructure.NHibernate.Extensions
+namespace Infrastructure.NHibernate.Extensions
 {
     using System;
     using System.Collections.Generic;

@@ -4,7 +4,8 @@
 
     using Base.DDD.Domain.Annotations;
     using Base.DDD.Domain.Support;
-    using Base.Infrastructure.NHibernate.Repositories;
+
+    using Infrastructure.NHibernate.Repositories;
 
     using NHibernate;
     using NHibernate.Linq;

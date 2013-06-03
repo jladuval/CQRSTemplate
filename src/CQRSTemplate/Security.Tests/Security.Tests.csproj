@@ -62,7 +62,7 @@
     </ProjectReference>
     <ProjectReference Include="..\Security\Security.csproj">
       <Project>{819bcb47-8aa8-46eb-8151-823986bed414}</Project>
-      <Name>Security %28Security\Security%29</Name>
+      <Name>Security %28Bounded Contexts\Security\Security%29</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
