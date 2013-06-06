@@ -51,17 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\Handlers\LogInUserCommandHandler.cs" />
-    <Compile Include="Commands\Handlers\LogOffUserCommandHandler.cs" />
     <Compile Include="Commands\Handlers\SignUpUserCommandHandler.cs" />
     <Compile Include="Domain\IRoleRepository.cs" />
     <Compile Include="Domain\Role.cs" />
     <Compile Include="Domain\RoleMap.cs" />
     <Compile Include="Events\UserCreatedEvent.cs" />
-    <Compile Include="Extensions\AuthCookieExtensions.cs" />
-    <Compile Include="Impersonation\DefaultIdentityProvider.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
-    <Compile Include="Services\AuthCookieService.cs" />
     <Compile Include="Services\CryptoService.cs" />
     <Compile Include="Readers\UserReader.cs" />
     <Compile Include="Services\ICryptoService.cs" />
@@ -95,6 +90,7 @@
       <Name>Security.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

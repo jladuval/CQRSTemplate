@@ -11,8 +11,7 @@
 
     using Common.DI;
 
-    using Security.Interfaces.Application.Impersonation;
-
+    using Web.Core.Impersonation;
     using Web.Migrations;
 
     public class MvcApplication : System.Web.HttpApplication
