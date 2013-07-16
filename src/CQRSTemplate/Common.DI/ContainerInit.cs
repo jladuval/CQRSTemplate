@@ -1,3 +1,9 @@
+using Base.CQRS.Commands;
+using Base.Mailing;
+using Base.StorageQueue;
+using FluentMigrator.InProc;
+using Web.Core;
+
 namespace Common.DI
 {
     using System.Collections;
@@ -36,23 +42,24 @@ namespace Common.DI
 
     public class ContainerInit
     {
+        private static Assembly _webAssembly;
+
         public static IWindsorContainer RegisterDI(Assembly webAssembly)
         {
+            _webAssembly = webAssembly;
+
             IWindsorContainer container = new WindsorContainer();
 
             AddResolversAndFacilities(container);
             RegisterMvcControllers(container, webAssembly);
 
-            // Temp
             RegisterEventPublishers(container);
 
-            // Register event component listeners
-            // This line resolves IEventSubscriber
             container.AddFacility<SubscribeEventListenerFacility>();
 
-            RegisterDomain(container);            
+            RegisterDomain(container);
             RegisterSingletons(container);
-            RegisterORM(container);            
+            RegisterORM(container);
             RegisterStatefullComponents(container, webAssembly);
             RegisterEventListeners(container);
             RegisterCommandHandlers(container);
@@ -61,47 +68,65 @@ namespace Common.DI
             return container;
         }
 
+        private static IEnumerable<Assembly> GetAssemblies()
+        {
+            return new[]
+                {
+                    typeof(CryptoService).Assembly,
+                    typeof(IGate).Assembly,
+                    typeof(Mailer).Assembly,
+                    typeof(IPersistenceSettings).Assembly,
+                    typeof(Migrator).Assembly,
+                    typeof(StorageQueues).Assembly,
+                    //typeof(Repository<,>).Assembly,
+                    typeof(CustomPrincipal).Assembly,
+                    _webAssembly
+                };
+        }
+
         private static void RegisterEventPublishers(IWindsorContainer container)
         {
-            container.Register(
-                Classes.FromAssemblyContaining<SimpleEventPublisher>()
-                    .Where(x => x == typeof(SimpleEventPublisher))
-                    .WithServiceAllInterfaces()
-                    .LifestyleSingleton());
+            foreach (var assembly in GetAssemblies())
+            {
+                container.Register(
+                    Classes.FromAssembly(assembly)
+                        .Where(x => x == typeof(SimpleEventPublisher))
+                        .WithServiceAllInterfaces()
+                        .LifestyleSingleton());
+            }
         }
 
         private static void RegisterSingletons(IWindsorContainer container)
         {
-            container.Register(
-                Classes.FromAssemblyInDirectory(new AssemblyFilter(HttpRuntime.BinDirectory))
-                    .Where(t => t.IsComponentLifestyle(ComponentLifestyle.Singleton))
-                    .StartIfNecessary()
-                    .WithServiceAllInterfaces()
-                    .WithServiceSelf()
-                    .LifestyleSingleton());
+            foreach (var assembly in GetAssemblies())
+            {
+                container.Register(
+                    Classes.FromAssembly(assembly)
+                        .Where(t => t.IsComponentLifestyle(ComponentLifestyle.Singleton))
+                        .StartIfNecessary()
+                        .WithServiceAllInterfaces()
+                        .WithServiceSelf()
+                        .LifestyleSingleton());
+            }
         }
 
         private static void RegisterDomain(IWindsorContainer container)
         {
-            container.Register(
-                Classes.FromAssemblyInDirectory(new AssemblyFilter(HttpRuntime.BinDirectory))
-                    .Where(t => t.IsComponentLifestyle(ComponentLifestyle.Transient) 
-                        || t.IsDefined(typeof(DomainFactoryAttribute), true)
-                        || t.IsDefined(typeof(DomainRepositoryImplementationAttribute), true)
-                        || t.IsDefined(typeof(DomainServiceAttribute), true) 
-                        || t.IsDefined(typeof(ReaderAttribute), true))
+            foreach (var assembly in GetAssemblies())
+            {
+                container.Register(Classes.FromAssembly(assembly)
+                    .Where(t => t.IsComponentLifestyle(ComponentLifestyle.Transient)
+                                || t.IsDefined(typeof(DomainFactoryAttribute), true)
+                                || t.IsDefined(typeof(DomainRepositoryImplementationAttribute), true)
+                                || t.IsDefined(typeof(DomainServiceAttribute), true)
+                                || t.IsDefined(typeof(ReaderAttribute), true))
                     .WithServiceAllInterfaces()
                     .WithServiceSelf()
                     .LifestyleTransient());
+            }
         }
 
-        private static Assembly[] GetAssemblies()
-        {
-            return new[]
-                {
-                    typeof(CryptoService).Assembly, 
-                };
-        }
+
 
         private static void RegisterORM(IWindsorContainer container)
         {
@@ -138,11 +163,14 @@ namespace Common.DI
 
         private static void RegisterEventListeners(IWindsorContainer container)
         {
-            container.Register(Classes.FromAssemblyInDirectory(new AssemblyFilter(HttpRuntime.BinDirectory))
-                                   .Where(l => l.IsEventListener())
-                                   .WithServiceAllInterfaces()
-                                   .Configure(x => x.Start())
-                                   .LifestyleSingleton());
+            foreach (var assembly in GetAssemblies())
+            {
+                container.Register(Classes.FromAssembly(assembly)
+                    .Where(l => l.IsEventListener())
+                    .WithServiceAllInterfaces()
+                    .Configure(x => x.Start())
+                    .LifestyleSingleton());
+            }
         }
 
         private static void RegisterConfiguration(IWindsorContainer container)
