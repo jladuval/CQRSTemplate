@@ -27,7 +27,6 @@
         }*/
         public void Handle(UserCreatedEvent eventData)
         {
-            throw new System.NotImplementedException();
         }
     }
 }
