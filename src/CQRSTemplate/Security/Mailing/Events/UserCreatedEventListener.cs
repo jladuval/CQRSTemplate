@@ -3,7 +3,6 @@
     using System.Collections.Generic;
 
     using Base.DDD.Infrastructure.Events;
-    using Base.Mailing;
 
     using Security.Events;
     using Security.Mailing.MailData;
@@ -11,7 +10,7 @@
     [EventListeners]
     public class UserCreatedEventListener : IEventListener<UserCreatedEvent>
     {
-        public IMailMessageFactory MailMessageFactory { get; set; }
+        /*public IMailMessageFactory MailMessageFactory { get; set; }
 
         public IMailer Mailer { get; set; }
 
@@ -25,6 +24,10 @@
                     @event.Email
                 };
             Mailer.Send(message);
+        }*/
+        public void Handle(UserCreatedEvent eventData)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -1,5 +1,4 @@
 using Base.CQRS.Commands;
-using Base.Mailing;
 using Base.StorageQueue;
 using FluentMigrator.InProc;
 using Web.Core;
@@ -74,7 +73,6 @@ namespace Common.DI
                 {
                     typeof(CryptoService).Assembly,
                     typeof(IGate).Assembly,
-                    typeof(Mailer).Assembly,
                     typeof(IPersistenceSettings).Assembly,
                     typeof(Migrator).Assembly,
                     typeof(StorageQueues).Assembly,
