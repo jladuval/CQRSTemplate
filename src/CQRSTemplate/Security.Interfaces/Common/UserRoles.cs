@@ -1,4 +1,4 @@
-﻿namespace Security.Interfaces.Application
+﻿namespace Security.Interfaces.Common
 {
     public enum UserRoles
     {

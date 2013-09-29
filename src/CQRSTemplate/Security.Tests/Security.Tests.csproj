@@ -45,7 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\HandlerTests\SignupUserCommandHandlerTest.cs" />
+    <Compile Include="Commands\Handlers\SignupUserCommandHandlerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,4 @@
-﻿namespace Security.Interfaces.Queries
+﻿namespace Security.Interfaces.Domain.Readers
 {
     public class CheckUserCredentialsQuery
     {

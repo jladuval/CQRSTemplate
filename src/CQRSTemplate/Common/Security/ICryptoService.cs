@@ -1,4 +1,4 @@
-﻿namespace Security.Services
+﻿namespace Common.Security
 {
     public interface ICryptoService
     {

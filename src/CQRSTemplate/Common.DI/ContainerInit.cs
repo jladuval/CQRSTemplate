@@ -29,13 +29,13 @@ namespace Common.DI
     using Castle.MicroKernel.Resolvers.SpecializedResolvers;
     using Castle.Windsor;
 
+    using Common.Security;
+
     using Infrastructure.Configuration;
     using Infrastructure.NHibernate.Configuration;
     using Infrastructure.NHibernate.Conventions;
 
     using NHibernate;
-
-    using Security.Services;
 
     using global::NHibernate.Cfg;
 

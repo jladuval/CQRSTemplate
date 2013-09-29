@@ -1,10 +1,10 @@
-﻿namespace Security.Domain
+﻿namespace Security.Domain.Model
 {
     using System.Collections.Generic;
 
     using Base.DDD.Domain;
 
-    using Security.Events;
+    using Security.Domain.Events;
 
     public class User : AggregateRoot
     {

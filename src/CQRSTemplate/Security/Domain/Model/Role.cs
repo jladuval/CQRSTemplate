@@ -1,4 +1,4 @@
-﻿namespace Security.Domain
+﻿namespace Security.Domain.Model
 {
     using System.Collections.Generic;
 

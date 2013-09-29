@@ -1,12 +1,9 @@
-﻿namespace Security.Services
+﻿namespace Common.Security
 {
     using System;
     using System.Security.Cryptography;
     using System.Text;
 
-    using Base.DDD.Domain.Annotations;
-
-    [DomainService]
     public class CryptoService : ICryptoService
     {
         private const int SaltSize = 128 / 8;
@@ -32,8 +29,10 @@
             {
                 throw new ArgumentNullException("salt");
             }
-            var hashedSaltedPlaintext = GenerateSaltedHash(Encoding.UTF8.GetBytes(plaintext),
-                                                           Encoding.UTF8.GetBytes(salt));
+            
+            var hashedSaltedPlaintext = GenerateSaltedHash(
+                Encoding.UTF8.GetBytes(plaintext), Encoding.UTF8.GetBytes(salt));
+            
             return Convert.ToBase64String(hashedSaltedPlaintext);
         }
 
@@ -54,8 +53,9 @@
                 throw new ArgumentNullException("salt");
             }
 
-            var hashedSaltedPlaintext = GenerateSaltedHash(Encoding.UTF8.GetBytes(plaintext),
-                                                           Encoding.UTF8.GetBytes(salt));
+            var hashedSaltedPlaintext = GenerateSaltedHash(
+                Encoding.UTF8.GetBytes(plaintext), Encoding.UTF8.GetBytes(salt));
+            
             return CompareByteArrays(Convert.FromBase64String(hashedpassword), hashedSaltedPlaintext);
         }
 

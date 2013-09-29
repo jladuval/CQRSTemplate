@@ -1,4 +1,4 @@
-﻿namespace Security.Domain
+﻿namespace Security.Domain.Model
 {
     using Base.DDD.Domain.Annotations;
     using Base.DDD.Domain.Support;

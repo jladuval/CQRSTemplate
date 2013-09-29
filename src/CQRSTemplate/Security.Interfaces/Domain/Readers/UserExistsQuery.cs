@@ -1,7 +1,4 @@
-﻿
-using System;
-
-namespace Security.Interfaces.Queries
+﻿namespace Security.Interfaces.Domain.Readers
 {
 	public class UserExistsQuery
 	{

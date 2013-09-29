@@ -4,6 +4,8 @@
 
     using Base.DDD.Domain.Annotations;
 
+    using Security.Domain.Model;
+
     [DomainRepository]
     public interface IRoleRepository
     {

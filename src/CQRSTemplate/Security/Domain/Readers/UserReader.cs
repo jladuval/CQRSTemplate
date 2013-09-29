@@ -1,18 +1,18 @@
-﻿namespace Security.Readers
+﻿namespace Security.Domain.Readers
 {
     using System;
     using System.Linq;
 
     using Base.CQRS.Query.Attributes;
 
+    using Common.Security;
+
     using NHibernate;
     using NHibernate.Linq;
 
-    using Security.Domain;
-    using Security.Interfaces.Application;
-    using Security.Interfaces.Presentation;
-    using Security.Interfaces.Queries;
-    using Security.Services;
+    using Security.Domain.Model;
+    using Security.Interfaces.Common;
+    using Security.Interfaces.Domain.Readers;
 
     [Reader]
     public class UserReader : ISecurityUserReader

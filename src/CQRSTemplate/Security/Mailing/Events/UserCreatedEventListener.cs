@@ -4,7 +4,7 @@
 
     using Base.DDD.Infrastructure.Events;
 
-    using Security.Events;
+    using Security.Domain.Events;
     using Security.Mailing.MailData;
 
     [EventListeners]

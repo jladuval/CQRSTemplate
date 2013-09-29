@@ -1,16 +1,17 @@
-﻿namespace Security.Repositories
+﻿namespace Security.Infrastructure.Data
 {
     using System.Linq;
 
     using Base.DDD.Domain.Annotations;
     using Base.DDD.Domain.Support;
 
-    using Infrastructure.NHibernate.Repositories;
+    using global::Infrastructure.NHibernate.Repositories;
 
     using NHibernate;
     using NHibernate.Linq;
 
     using Security.Domain;
+    using Security.Domain.Model;
 
     [DomainRepositoryImplementation]
     public class RoleRepository : GenericRepositoryForBaseEntity<Role>, IRoleRepository

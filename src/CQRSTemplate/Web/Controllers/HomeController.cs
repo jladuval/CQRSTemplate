@@ -6,7 +6,7 @@
     using Base.CQRS.Commands;
 
     using Security.Interfaces.Commands;
-    using Security.Interfaces.Queries;
+    using Security.Interfaces.Domain.Readers;
 
     public class HomeController : Controller
     {
