@@ -60,6 +60,7 @@
     <Compile Include="CQRS\Commands\Attributes\CommandAttribute.cs" />
     <Compile Include="CQRS\Commands\Attributes\CommandHandlerAttribute.cs" />
     <Compile Include="CQRS\Commands\Attributes\OutputCommandParameterAttribute.cs" />
+    <Compile Include="CQRS\Commands\Attributes\QueueAttribute.cs" />
     <Compile Include="CQRS\Commands\Decorator\ConatinerCommandHandlerDecorator.cs" />
     <Compile Include="CQRS\Commands\Decorator\TransactionalCommandHandlerDecorator.cs" />
     <Compile Include="CQRS\Commands\Decorator\GateHistoryDecorator.cs" />

@@ -4,15 +4,18 @@
     using System.Reflection;
     using System.Web.Mvc;
     using System.Web.Routing;
-
+    using Microsoft.AspNet.SignalR;
+    using Microsoft.AspNet.SignalR.Hosting;
+    using Microsoft.AspNet.SignalR.Hosting;
     using Base.StorageQueue;
 
     using Castle.Windsor;
 
     using Common.DI;
 
-    using Web.Core.Impersonation;
-    using Web.Migrations;
+    using Core.Impersonation;
+    using Migrations;
+    using Pushers;
 
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -42,12 +45,14 @@
 
         protected void Application_Start()
         {
+            RouteTable.Routes.MapHubs();
             AreaRegistration.RegisterAllAreas();
             container = ContainerInit.RegisterDI(Assembly.GetExecutingAssembly());
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
             InitializeInfrastructure();
             MigrateDatabaseSchema();
+            new ShipPusher().Run();
         }
 
         private static void InitializeInfrastructure()
