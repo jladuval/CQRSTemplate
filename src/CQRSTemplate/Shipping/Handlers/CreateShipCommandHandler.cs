@@ -1,5 +1,7 @@
 ﻿namespace Shipping.Handlers
 {
+    using System;
+    using System.Threading;
     using Base.CQRS.Commands.Attributes;
     using Base.CQRS.Commands.Handler;
     using Base.StorageQueue;
@@ -10,7 +12,12 @@
     {
         public void Handle(CreateShipCommand command)
         {
-            ShipQueue.Push("Verifying " + command.Name);
+            ShipQueue.PushEvent("Building Hull for  " + command.Name);
+            Thread.Sleep(new TimeSpan(0,0,5));
+            ShipQueue.PushEvent("Finding Guests For " + command.Name);
+            Thread.Sleep(new TimeSpan(0, 0, 5));
+            ShipQueue.PushEvent("Emailing Passengers For  " + command.Name);
+
         }
     }
 }

@@ -7,7 +7,7 @@
 
     public class ShipQueue
     {
-        public static void Push(string message)
+        public static void PushEvent(string message)
         {
             if (!RoleEnvironment.IsAvailable) return;
             var storageAccount = CloudStorageAccount.Parse(
