@@ -53,20 +53,18 @@
   <ItemGroup>
     <Compile Include="Commands\Handlers\SignUpUserCommandHandler.cs" />
     <Compile Include="Domain\IRoleRepository.cs" />
-    <Compile Include="Domain\Role.cs" />
-    <Compile Include="Domain\RoleMap.cs" />
-    <Compile Include="Events\UserCreatedEvent.cs" />
-    <Compile Include="Repositories\RoleRepository.cs" />
-    <Compile Include="Services\CryptoService.cs" />
-    <Compile Include="Readers\UserReader.cs" />
-    <Compile Include="Services\ICryptoService.cs" />
+    <Compile Include="Domain\Model\Role.cs" />
+    <Compile Include="Infrastructure\Data\Mappings\RoleMap.cs" />
+    <Compile Include="Domain\Events\UserCreatedEvent.cs" />
+    <Compile Include="Infrastructure\Data\RoleRepository.cs" />
+    <Compile Include="Domain\Readers\UserReader.cs" />
     <Compile Include="Domain\IUserRepository.cs" />
-    <Compile Include="Domain\User.cs" />
-    <Compile Include="Domain\UserFactory.cs" />
-    <Compile Include="Domain\UserMap.cs" />
+    <Compile Include="Domain\Model\User.cs" />
+    <Compile Include="Domain\Model\UserFactory.cs" />
+    <Compile Include="Infrastructure\Data\Mappings\UserMap.cs" />
     <Compile Include="Mailing\Events\UserCreatedEventListener.cs" />
     <Compile Include="Mailing\MailData\VerificationEmailData.cs" />
-    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Infrastructure\Data\UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +78,10 @@
     <ProjectReference Include="..\Base\Base.csproj">
       <Project>{093055ad-d153-497c-8573-0209748060f3}</Project>
       <Name>Base %28Base\Base%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{b8ad567a-2217-45ac-9309-76e29d20e2e2}</Project>
+      <Name>Common %28Common\Common%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\Security.Interfaces\Security.Interfaces.csproj">
       <Project>{8ddafb9a-ff87-446e-bc29-08a14a8fe698}</Project>

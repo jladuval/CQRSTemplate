@@ -1,8 +1,10 @@
-﻿namespace Security.Domain
+﻿namespace Security.Infrastructure.Data.Mappings
 {
     using System;
 
     using FluentNHibernate.Mapping;
+
+    using Security.Domain.Model;
 
     public class UserMap : ClassMap<User>
     {

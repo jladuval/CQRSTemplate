@@ -40,15 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application\UserRoles.cs" />
+    <Compile Include="Common\UserRoles.cs" />
     <Compile Include="Commands\LogInUserCommand.cs" />
     <Compile Include="Commands\LogOffUserCommand.cs" />
     <Compile Include="Commands\SignUpUserCommand.cs" />
-    <Compile Include="Presentation\CheckUserCredentialsDto.cs" />
+    <Compile Include="Domain\Readers\CheckUserCredentialsDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Queries\CheckUserCredentialsQuery.cs" />
-    <Compile Include="Queries\ISecurityUserReader.cs" />
-    <Compile Include="Queries\UserExistsQuery.cs" />
+    <Compile Include="Domain\Readers\CheckUserCredentialsQuery.cs" />
+    <Compile Include="Domain\Readers\ISecurityUserReader.cs" />
+    <Compile Include="Domain\Readers\UserExistsQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Base\Base.csproj">

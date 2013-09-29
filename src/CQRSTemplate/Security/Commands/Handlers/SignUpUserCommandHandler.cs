@@ -5,11 +5,13 @@
     using Base.CQRS.Commands.Attributes;
     using Base.CQRS.Commands.Handler;
 
-    using Infrastructure.NHibernate.Repositories;
+    using Common.Security;
+
+    using global::Infrastructure.NHibernate.Repositories;
 
     using Security.Domain;
+    using Security.Domain.Model;
     using Security.Interfaces.Commands;
-    using Security.Services;
 
     [CommandHandler]
     public class SignUpUserCommandHandler : ICommandHandler<SignUpUserCommand>

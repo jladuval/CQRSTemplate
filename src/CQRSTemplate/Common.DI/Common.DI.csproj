@@ -82,6 +82,10 @@
       <Project>{093055ad-d153-497c-8573-0209748060f3}</Project>
       <Name>Base %28Base\Base%29</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{b8ad567a-2217-45ac-9309-76e29d20e2e2}</Project>
+      <Name>Common %28Common\Common%29</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Infrastructure.Configuration\Infrastructure.Configuration.csproj">
       <Project>{56ED39CF-5511-43D9-91EA-D298E708F243}</Project>
       <Name>Infrastructure.Configuration</Name>

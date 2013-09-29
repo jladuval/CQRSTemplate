@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Base.CQRS.Commands.Attributes;
-using Security.Interfaces.Application;
-
-namespace Security.Interfaces.Commands
+﻿namespace Security.Interfaces.Commands
 {
+    using System;
+    using System.Collections.Generic;
+
+    using Base.CQRS.Commands.Attributes;
+
+    using Security.Interfaces.Common;
+
     [Command]
     public class LogInUserCommand
     {

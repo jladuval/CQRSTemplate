@@ -1,11 +1,11 @@
-﻿using Moq;
-
-using Security.Domain;
-using Security.Interfaces.Commands;
-using Xunit;
-
-namespace Security.Tests.Application.HandlerTests
+﻿namespace Security.Tests.Commands.Handlers
 {
+    using Moq;
+
+    using Security.Domain;
+    using Security.Interfaces.Commands;
+    using Xunit;
+
     public class SignupUserCommandHandlerTest
     {
         //readonly SignUpUserCommandHandler _handler = new SignUpUserCommandHandler();

@@ -7,8 +7,12 @@
     using Base.CQRS.Commands;
     using Hubs;
     using Security.Interfaces.Commands;
+<<<<<<< HEAD
     using Security.Interfaces.Domain.Readers;
+=======
+    using Security.Interfaces.Queries;
     using Shipping.Interfaces.Commands;
+>>>>>>> 624eb80547b7f2133f8278a241b7a819938c5415
 
     public class HomeController : Controller
     {

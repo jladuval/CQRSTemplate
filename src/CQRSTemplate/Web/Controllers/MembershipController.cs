@@ -1,11 +1,13 @@
 ﻿using System.Web.Mvc;
 using Base.CQRS.Commands;
 using Security.Interfaces.Commands;
-using Security.Interfaces.Queries;
+
 using Web.Models.Membership;
 
 namespace Web.Controllers
 {
+    using Security.Interfaces.Domain.Readers;
+
     public class MembershipController : Controller
     {
         private readonly ISecurityUserReader _securityUserReader;
