@@ -11,7 +11,7 @@ namespace Common.DI
     using System.Reflection;
     using System.Web;
     using System.Web.Mvc;
-
+    using Base.CQRS.Commands.Attributes;
     using Base.CQRS.Commands.Decorator;
     using Base.CQRS.Commands.Handler;
     using Base.CQRS.Query.Attributes;
@@ -38,6 +38,8 @@ namespace Common.DI
     using Security.Services;
 
     using global::NHibernate.Cfg;
+    using Shipping.Handlers;
+    using Shipping.Interfaces.Commands;
 
     public class ContainerInit
     {
@@ -76,7 +78,8 @@ namespace Common.DI
                     typeof(IPersistenceSettings).Assembly,
                     typeof(Migrator).Assembly,
                     typeof(StorageQueues).Assembly,
-                    //typeof(Repository<,>).Assembly,
+                    typeof(CreateShipCommandHandler).Assembly,
+                    typeof(CreateShipCommand).Assembly,
                     typeof(CustomPrincipal).Assembly,
                     _webAssembly
                 };
@@ -117,6 +120,7 @@ namespace Common.DI
                                 || t.IsDefined(typeof(DomainFactoryAttribute), true)
                                 || t.IsDefined(typeof(DomainRepositoryImplementationAttribute), true)
                                 || t.IsDefined(typeof(DomainServiceAttribute), true)
+                                || t.IsDefined(typeof(QueueAttribute), true)
                                 || t.IsDefined(typeof(ReaderAttribute), true))
                     .WithServiceAllInterfaces()
                     .WithServiceSelf()

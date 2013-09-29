@@ -3,11 +3,12 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Queue;
-using Base.DDD.Domain.Annotations;
 
 namespace Base.StorageQueue
 {
-    [DomainService]
+    using CQRS.Commands.Attributes;
+
+    [Queue]
     public class MailQueue : IMailQueue
     {
         public void SendMessage<T>(T message)where T : class

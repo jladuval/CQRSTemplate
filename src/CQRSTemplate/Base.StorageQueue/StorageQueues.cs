@@ -5,24 +5,41 @@ using Base.DDD.Domain.Annotations;
 
 namespace Base.StorageQueue
 {
+    using Microsoft.WindowsAzure.Storage.Queue;
+
     [DomainService]
     public class StorageQueues : IStorageQueues
     {
         public void InitializeAllQueues()
         {
-            if (RoleEnvironment.IsAvailable)
-            {
-                var storageAccount = CloudStorageAccount.Parse(
-                    CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            if (!RoleEnvironment.IsAvailable) return;
 
-                var mailQueueName = CloudConfigurationManager.GetSetting("MailQueue.Name");
+            var storageAccount = CloudStorageAccount.Parse(
+                CloudConfigurationManager.GetSetting("StorageConnectionString"));
 
-                var queueClient = storageAccount.CreateCloudQueueClient();
+            var queueClient = storageAccount.CreateCloudQueueClient();
 
-                var queue = queueClient.GetQueueReference(mailQueueName);
+            CreateShipQueue(queueClient);
 
-                queue.CreateIfNotExists();
-            }
+            CreateMailQueue(queueClient);
+        }
+
+        private void CreateShipQueue(CloudQueueClient queueClient)
+        {
+            var shipQueueName = CloudConfigurationManager.GetSetting("ShipQueue.Name");
+
+            var queue = queueClient.GetQueueReference(shipQueueName);
+
+            queue.CreateIfNotExists();
+        }
+
+        private void CreateMailQueue(CloudQueueClient queueClient)
+        {
+            var mailQueueName = CloudConfigurationManager.GetSetting("MailQueue.Name");
+
+            var queue = queueClient.GetQueueReference(mailQueueName);
+
+            queue.CreateIfNotExists();
         }
     }
 }

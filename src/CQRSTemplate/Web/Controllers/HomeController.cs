@@ -1,12 +1,14 @@
 ﻿namespace Web.Controllers
 {
     using System;
+    using System.Net;
     using System.Web.Mvc;
 
     using Base.CQRS.Commands;
-
+    using Hubs;
     using Security.Interfaces.Commands;
     using Security.Interfaces.Queries;
+    using Shipping.Interfaces.Commands;
 
     public class HomeController : Controller
     {
@@ -28,6 +30,14 @@
             _securityUserReader.CheckUserCredentials(
                 new CheckUserCredentialsQuery { Email = username, Password = password });
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateCruiseShip(string name)
+        {
+            EventHub.Send("Creating " + name);
+            _gate.Dispatch(new CreateShipCommand(name, Guid.NewGuid()));
+            return new HttpStatusCodeResult(HttpStatusCode.Accepted);
         }
     }
 }
