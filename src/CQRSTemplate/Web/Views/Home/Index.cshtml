@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Web.Models.Home.HomeModel
+@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -19,7 +20,14 @@
         <h2>Create a large, complicated cruise ship</h2>
         <input type="text" id="name" />
         <input type="button" id="createShip" value="Create" />
-        <ul id="discussion">
+        <ul id="events">
+        </ul>
+        <hr/>
+        <ul id="shipList">
+            @foreach (var ship in Model.Ships)
+            {
+                <li><strong>@ship.Name</strong> has an Id of @ship.Id</li>
+            }
         </ul>
     </div>
     <!--Script references. -->
@@ -40,7 +48,13 @@
                 // Html encode display name and message. 
                 var encodedMsg = $('<div />').text(name).html();
                 // Add the message to the page. 
-                $('#discussion').append('<li><strong>Update:</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+                $('#events').append('<li><strong>Update:</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+            };
+            
+            chat.client.shipCreated = function (name, id) {
+                // Add the message to the page. 
+                
+                $('#shipList').append('<li><strong>' + $('<div />').text(name).html() + '</strong> has an Id of ' + $('<div />').text(id).html() + '</li>');
             };
             // Set initial focus to message input box.  
             $('#name').focus();

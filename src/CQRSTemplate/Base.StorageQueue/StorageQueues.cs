@@ -21,12 +21,23 @@ namespace Base.StorageQueue
 
             CreateShipQueue(queueClient);
 
+            CreateShipObjectQueue(queueClient);
+
             CreateMailQueue(queueClient);
         }
 
         private void CreateShipQueue(CloudQueueClient queueClient)
         {
             var shipQueueName = CloudConfigurationManager.GetSetting("ShipQueue.Name");
+
+            var queue = queueClient.GetQueueReference(shipQueueName);
+
+            queue.CreateIfNotExists();
+        }
+
+        private void CreateShipObjectQueue(CloudQueueClient queueClient)
+        {
+            var shipQueueName = CloudConfigurationManager.GetSetting("ShipObjectQueue.Name");
 
             var queue = queueClient.GetQueueReference(shipQueueName);
 

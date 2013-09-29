@@ -5,6 +5,7 @@
     <ConfigurationSettings>
       <Setting name="MailQueue.Name" value="mailqueue" />
       <Setting name="ShipQueue.Name" value="shipqueue" />
+      <Setting name="ShipObjectQueue.Name" value="shipobjectqueue" />
       <Setting name="StorageConnectionString" value="UseDevelopmentStorage=true" />
     </ConfigurationSettings>
   </Role>

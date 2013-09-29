@@ -183,6 +183,7 @@
     <Compile Include="Migrations\Migrator.cs" />
     <Compile Include="Models\Home\UserModel.cs" />
     <Compile Include="Models\Membership\LogInModel.cs" />
+    <Compile Include="Models\Home\HomeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Pushers\ShipPusher.cs" />
     <Compile Include="WindsorControllerFactory.asax.cs" />

@@ -16,6 +16,7 @@
     <ConfigurationSettings>
       <Setting name="MailQueue.Name" />
       <Setting name="ShipQueue.Name" />
+      <Setting name="ShipObjectQueue.Name" />
       <Setting name="StorageConnectionString" />
     </ConfigurationSettings>
   </WebRole>

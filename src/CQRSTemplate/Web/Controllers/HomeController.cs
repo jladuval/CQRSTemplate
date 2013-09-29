@@ -1,25 +1,30 @@
 ﻿namespace Web.Controllers
 {
     using System;
+    using System.Linq;
     using System.Net;
     using System.Web.Mvc;
 
     using Base.CQRS.Commands;
     using Hubs;
+    using Models.Home;
     using Security.Interfaces.Commands;
     using Security.Interfaces.Domain.Readers;
     using Shipping.Interfaces.Commands;
+    using Shipping.Interfaces.Readers;
 
     public class HomeController : Controller
     {
         private readonly ISecurityUserReader _securityUserReader;
 
         private readonly IGate _gate;
+        private readonly IShipReader _shipReader;
 
-        public HomeController(ISecurityUserReader securityUserReader, IGate gate)
+        public HomeController(ISecurityUserReader securityUserReader, IGate gate, IShipReader shipReader)
         {
             _securityUserReader = securityUserReader;
             _gate = gate;
+            _shipReader = shipReader;
         }        
 
         public ActionResult Index()
@@ -29,7 +34,15 @@
             _gate.Dispatch(new SignUpUserCommand(username, password));
             _securityUserReader.CheckUserCredentials(
                 new CheckUserCredentialsQuery { Email = username, Password = password });
-            return View();
+            var model = new HomeModel
+            {
+                Ships = _shipReader.GetAllShips().Select(x => new ShipModel
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                }).ToList()
+            };
+            return View(model);
         }
 
         [HttpPost]
