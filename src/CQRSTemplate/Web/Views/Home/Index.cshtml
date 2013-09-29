@@ -45,9 +45,7 @@
             // Set initial focus to message input box.  
             $('#name').focus();
             // Start the connection.
-            $.connection.hub.start({ transport: 'longPolling' }, function () {
-                console.log('connection started!');
-            }).done(function () {
+            $.connection.hub.start().done(function () {
                 $('#createShip').click(function () {
                     $.post('/Home/CreateCruiseShip', { name: $('#name').val() });
                     // Call the Send method on the hub. 

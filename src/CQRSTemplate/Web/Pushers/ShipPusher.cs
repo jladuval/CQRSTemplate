@@ -35,12 +35,13 @@
 
             var retrievedMessage = _queue.GetMessage();
 
-            if (retrievedMessage != null)
+            while (retrievedMessage != null)
             {
                 EventHub.Send(retrievedMessage.AsString);
 
                 //Process the message in less than 30 seconds, and then delete the message
                 _queue.DeleteMessage(retrievedMessage);
+                retrievedMessage = _queue.GetMessage();
             }
         }
     }

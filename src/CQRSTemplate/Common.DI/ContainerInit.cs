@@ -30,7 +30,7 @@ namespace Common.DI
     using Castle.Windsor;
 
     using Common.Security;
-
+    using global::Security.Domain.Readers;
     using Infrastructure.Configuration;
     using Infrastructure.NHibernate.Configuration;
     using Infrastructure.NHibernate.Conventions;
@@ -38,6 +38,7 @@ namespace Common.DI
     using NHibernate;
 
     using global::NHibernate.Cfg;
+    using NHibernate.Linq;
     using Shipping.Handlers;
     using Shipping.Interfaces.Commands;
 
@@ -74,8 +75,10 @@ namespace Common.DI
             return new[]
                 {
                     typeof(CryptoService).Assembly,
+                    typeof(ICryptoService).Assembly,
                     typeof(IGate).Assembly,
                     typeof(IPersistenceSettings).Assembly,
+                    typeof(UserReader).Assembly,
                     typeof(Migrator).Assembly,
                     typeof(StorageQueues).Assembly,
                     typeof(CreateShipCommandHandler).Assembly,

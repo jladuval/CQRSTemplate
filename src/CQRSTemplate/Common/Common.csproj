@@ -43,6 +43,12 @@
     <Compile Include="Security\CryptoService.cs" />
     <Compile Include="Security\ICryptoService.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Base\Base.csproj">
+      <Project>{093055AD-D153-497C-8573-0209748060F3}</Project>
+      <Name>Base %28Base\Base%29</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

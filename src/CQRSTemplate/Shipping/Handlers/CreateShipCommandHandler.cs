@@ -17,7 +17,8 @@
             ShipQueue.PushEvent("Finding Guests For " + command.Name);
             Thread.Sleep(new TimeSpan(0, 0, 5));
             ShipQueue.PushEvent("Emailing Passengers For  " + command.Name);
-
+            Thread.Sleep(new TimeSpan(0, 0, 5));
+            ShipQueue.PushEvent(command.Name + " created, id is " + Guid.NewGuid());
         }
     }
 }

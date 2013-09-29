@@ -3,7 +3,9 @@
     using System;
     using System.Security.Cryptography;
     using System.Text;
+    using Base.DDD.Domain.Annotations;
 
+    [DomainService]
     public class CryptoService : ICryptoService
     {
         private const int SaltSize = 128 / 8;
